@@ -1,12 +1,129 @@
-*.class
+Code
+public class GlobalMembersHangman
+{
+public static String[] hangman = {"------------------------/n", "|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| |\n|\n|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O\n|\n|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O\n|\n/|\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O\n|\n/|\\n|\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O\n|\n/|\\n|/\n|\n|\n|\n|\n|\n------------------------\n", "_____________________\n| |\n| |\n| O\n|\n/|\\n|/ \\n|\n|\n|\n|\n|\n------------------------\n"};
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+// List of words, which are Star Trek Related read fom file!!!
 
-# Package Files #
-*.jar
-*.war
-*.ear
+public static String[] list = new String[20]; /*{"kirk", "picard", "sisko", "janeway", "archer",
+"engineer", "medical", "helm", "communications", "navigation",
+"ensign", "officer", "captain", "doctor", "admiral",
+"human", "borg", "klingon", "romulam", "vulcan"};*/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+public static int Main()
+{
+
+FILE dFile;
+String String = new String(new char[20]);
+int i = 0;
+int[] usedletters = new int[26]; // pointing the number of letters needed for word
+String dashes = new String(new char[30]); // hold dashes & guess
+int n; // holds index to random word
+int len; // holds length of word
+int wrongNum; // number of guesses wrong
+byte c; // holds input character
+int word = 0; //number of words in file
+int found; // says if letter found
+dFile = fopen("D:\\Users\\Sukhraj Sumal\\University\\Programming\\Programming Project\\hangman character list.txt", "r");
+
+if (dFile == null)
+{
+System.out.print("Cannot open file");
+return;
+}
+else
+{
+while (fgets(String, sizeof(String), dFile) != null)
+{
+
+list [word] = (String)malloc(String.length() + 1);
+list [word++] = String;
+if (word >= 20) // so not more than array
+break;
+}
+fclose(dFile);
+}
+
+wrongNum = 0;
+n = tangible.RandomNumbers.nextNumber() % word; // pick a word index
+len = String.valueOf(list[n]).length(); // get length of word
+memset(usedletters, 0,Integer.SIZE); // clear used letters
+memset(dashes, 0, Byte.SIZE); // clear dashes
+memset(dashes, '-', len); // set to dashes for length of word
+while (true)
+{
+
+System.out.printf("\n\n%s\n", dashes);
+System.out.print("input letter on screen\n"); // user needs to input letter
+c = System.in.read();
+
+if (Character.isLetter(c) != 0) // check if alphabetic character
+{
+if (usedletters [Character.toLowerCase(c) - 'a'] != 0) // check if letter already used
+{
+System.out.print("\nLetter used\n");
+continue;
+}
+
+usedletters [Character.toLowerCase(c) - 'a'] = 1;
+found = 0;
+for (i = 0; i < len; i++)
+{
+
+if (list [n][i] == c) // if a letter found
+{
+found = 1;
+dashes.charAt(i) = c;
+}
+}
+if (found == 1) // if user got a letter
+{
+if (_strcmpi(list [n], dashes) == 0) // compare case insentive
+{
+System.out.print("\nYOU WON\n");
+break;
+}
+}
+else
+{
+
+// hangman
+System.out.print(hangman [wrongNum]);
+wrongNum++;
+if (wrongNum == 12)
+{
+System.out.print("\nYOU LOST\n");
+break;
+}
+}
+}
+}
+System.out.print("press a key to exit");
+System.in.read();
+return 0; // returning value
+}
+}
+public final class RandomNumbers
+{
+private static Random r;
+public static int nextNumber()
+{
+if (r == null)
+Seed();
+return r.nextInt();
+}
+public static int nextNumber(int ceiling)
+{
+if (r == null)
+Seed();
+return r.nextInt(ceiling);
+}
+public static void seed()
+{
+r = new Random();
+}
+public static void seed(int seed)
+{
+r = new Random(seed);
+}
+}
